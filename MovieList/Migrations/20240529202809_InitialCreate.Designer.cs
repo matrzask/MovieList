@@ -11,7 +11,7 @@ using MovieList.Data;
 namespace MovieList.Migrations
 {
     [DbContext(typeof(MovieListContext))]
-    [Migration("20240529145149_InitialCreate")]
+    [Migration("20240529202809_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,12 +27,15 @@ namespace MovieList.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Genre")
+                        .HasMaxLength(40)
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("ReleaseYear")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(160)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

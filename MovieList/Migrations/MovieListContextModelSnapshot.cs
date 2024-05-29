@@ -24,12 +24,15 @@ namespace MovieList.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Genre")
+                        .HasMaxLength(40)
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("ReleaseYear")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(160)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

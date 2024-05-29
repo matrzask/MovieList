@@ -31,7 +31,6 @@
 
     <ItemGroup>
       <Folder Include="Data\" />
-      <Folder Include="Migrations\" />
       <Folder Include="Views\HelloWorld\" />
       <Folder Include="Views\Movies\" />
     </ItemGroup>

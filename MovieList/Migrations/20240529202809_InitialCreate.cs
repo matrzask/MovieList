@@ -16,9 +16,9 @@ namespace MovieList.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", nullable: true),
+                    Title = table.Column<string>(type: "TEXT", maxLength: 160, nullable: false),
                     ReleaseYear = table.Column<int>(type: "INTEGER", nullable: true),
-                    Genre = table.Column<string>(type: "TEXT", nullable: true)
+                    Genre = table.Column<string>(type: "TEXT", maxLength: 40, nullable: true)
                 },
                 constraints: table =>
                 {
