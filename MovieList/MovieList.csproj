@@ -37,10 +37,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Models\Movie.cs" />
       <Compile Remove="Migrations\MovieListContextModelSnapshot.cs" />
       <Compile Remove="Migrations\20240529131959_InitialCreate.Designer.cs" />
-      <Compile Remove="Controllers\MoviesController.cs" />
       <Compile Remove="Controllers\HelloWorldController.cs" />
     </ItemGroup>
 
