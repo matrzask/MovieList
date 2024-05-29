@@ -6,4 +6,42 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Views\Movies\Edit.cshtml" />
+      <Content Remove="Views\Movies\Delete.cshtml" />
+      <Content Remove="Views\HelloWorld\Welcome.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\" />
+      <Folder Include="Migrations\" />
+      <Folder Include="Views\HelloWorld\" />
+      <Folder Include="Views\Movies\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Models\Movie.cs" />
+      <Compile Remove="Migrations\MovieListContextModelSnapshot.cs" />
+      <Compile Remove="Migrations\20240529131959_InitialCreate.Designer.cs" />
+      <Compile Remove="Controllers\MoviesController.cs" />
+      <Compile Remove="Controllers\HelloWorldController.cs" />
+    </ItemGroup>
+
 </Project>
