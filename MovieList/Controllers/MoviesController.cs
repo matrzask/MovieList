@@ -153,5 +153,22 @@ namespace MovieList.Controllers
         {
             return _context.Movie.Any(e => e.Id == id);
         }
+        //ten kontroler ponizej nic jeszcze nie robi, ale on jest odpowiedzialny za okno dodawania do doobejrzenia
+        public IActionResult AddToWatchlist(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var movie = _context.Movie.Find(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            // Na razie nie robimy nic z filmem, tylko wyświetlamy pustą stronę.
+            return View(movie);
+        }
     }
 }

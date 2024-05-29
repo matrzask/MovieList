@@ -1,0 +1,42 @@
+@model MovieList.Models.Movie
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AddFilm</title>
+    <style>
+        .note-container {
+            margin-top: 20px;
+        }
+        .note-textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .watchlist-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .watchlist-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>AddFilm</h1>
+    <p>Film: @Model.Title</p>
+    <div class="note-container">
+        <label for="note">Komentarz:</label>
+        <textarea id="note" class="note-textarea" placeholder="Dodaj swoje notatki tutaj..."></textarea>
+        <br />
+        <button class="watchlist-button">Dodaj do WatchList</button>
+    </div>
+</body>
+</html>
