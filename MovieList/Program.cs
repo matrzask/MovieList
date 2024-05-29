@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using MovieList.Data;
 using MovieList.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MovieListContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MovieListContext") ?? throw new InvalidOperationException("Connection string 'MovieListContext' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<MovieListContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -36,5 +39,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();
