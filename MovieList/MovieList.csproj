@@ -27,15 +27,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="Views\Movies\Edit.cshtml" />
-      <Content Remove="Views\Movies\Delete.cshtml" />
       <Content Remove="Views\HelloWorld\Welcome.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Data\" />
       <Folder Include="Views\HelloWorld\" />
-      <Folder Include="Views\Movies\" />
     </ItemGroup>
 
     <ItemGroup>
