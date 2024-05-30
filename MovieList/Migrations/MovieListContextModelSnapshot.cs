@@ -155,15 +155,15 @@ namespace MovieList.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("MovieId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("MovieListUserId")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

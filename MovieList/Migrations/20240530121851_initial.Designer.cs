@@ -11,8 +11,8 @@ using MovieList.Data;
 namespace MovieList.Migrations
 {
     [DbContext(typeof(MovieListContext))]
-    [Migration("20240530120344_Initial")]
-    partial class Initial
+    [Migration("20240530121851_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,15 +158,15 @@ namespace MovieList.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("MovieId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("MovieListUserId")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
