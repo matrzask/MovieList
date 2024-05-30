@@ -25,7 +25,13 @@ namespace MovieList.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ListItem.ToListAsync());
+            string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return NotFound();
+            }
+            var list = _context.ListItem.Where(m => m.IdentityUserId == userId);
+            return View(await list.ToListAsync());
         }
 
         // GET: List/Details/5
