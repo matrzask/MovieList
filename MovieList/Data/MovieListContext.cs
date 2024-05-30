@@ -8,7 +8,7 @@ using MovieList.Models;
 
 namespace MovieList.Data
 {
-    public class MovieListContext : IdentityDbContext
+    public class MovieListContext : IdentityDbContext<MovieListUser>
     {
         public MovieListContext (DbContextOptions<MovieListContext> options)
             : base(options)
