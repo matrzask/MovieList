@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace MovieList.Controllers
         }
 
         // GET: List
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.ListItem.ToListAsync());
@@ -45,6 +47,7 @@ namespace MovieList.Controllers
         }
 
         // GET: List/Create
+        [Authorize]
         public IActionResult Create(int id)
         {
             ViewData["MovieId"] = id;
@@ -57,6 +60,7 @@ namespace MovieList.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("MovieId, Note")] ListItem listItem)
         {
             string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -76,6 +80,7 @@ namespace MovieList.Controllers
         }
 
         // GET: List/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,6 +101,7 @@ namespace MovieList.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,MovieId,IdentityUserId,Note")] ListItem listItem)
         {
             if (id != listItem.Id)
@@ -127,6 +133,7 @@ namespace MovieList.Controllers
         }
 
         // GET: List/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,6 +154,7 @@ namespace MovieList.Controllers
         // POST: List/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var listItem = await _context.ListItem.FindAsync(id);
