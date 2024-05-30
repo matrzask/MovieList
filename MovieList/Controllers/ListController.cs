@@ -30,8 +30,30 @@ namespace MovieList.Controllers
             {
                 return NotFound();
             }
-            var list = _context.ListItem.Where(m => m.IdentityUserId == userId);
-            return View(await list.ToListAsync());
+            var query = _context.ListItem.Where(m => m.IdentityUserId == userId);
+            /*var list = query.Select(m => new ListIndexViewModel
+            {
+                Id = m.Id,
+                Title = m.Movie.Title,
+                ReleaseYear = m.Movie.ReleaseYear,
+                Genre = m.Movie.Genre,
+                Note = m.Note
+            });*/
+            var listTemp = query.ToList();
+            var list = new List<ListIndexViewModel>();
+            foreach (var item in listTemp)
+            {
+                list.Add(new ListIndexViewModel
+                {
+                    Id = item.Id,
+                    Title = _context.Movie.Find(item.MovieId)?.Title,
+                    ReleaseYear = _context.Movie.Find(item.MovieId)?.ReleaseYear,
+                    Genre = _context.Movie.Find(item.MovieId)?.Genre,
+                    Note = item.Note
+                });
+            }
+            //return View(await list.ToListAsync());
+            return View(list);
         }
 
         // GET: List/Details/5
