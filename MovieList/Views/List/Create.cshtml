@@ -1,11 +1,11 @@
-@model MovieList.Models.Movie
+@model MovieList.Models.ListItem
 
-<!DOCTYPE html>
-<html lang="en">
+@{
+ViewData["Title"] = "Add to watchlist";
+}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AddFilm</title>
     <style>
         .note-container {
             margin-top: 20px;
@@ -30,13 +30,13 @@
     </style>
 </head>
 <body>
-    <h1>AddFilm</h1>
-    <p>Film: @Model.Title</p>
-    <div class="note-container">
-        <label for="note">Komentarz:</label>
-        <textarea id="note" class="note-textarea" placeholder="Dodaj swoje notatki tutaj..."></textarea>
-        <br />
-        <button class="watchlist-button">Dodaj do WatchList</button>
-    </div>
+<h1>AddFilm</h1>
+<p>Film: @ViewData["MovieTitle"]</p>
+<form class="note-container" asp-action="Create">
+    <input type="hidden" asp-for="MovieId" value=@ViewData["MovieId"] />
+    <label asp-for="Note">Komentarz:</label>
+    <textarea asp-for="Note" class="note-textarea" placeholder="Dodaj swoje notatki tutaj..."></textarea>
+    <br/>
+    <button class="btn btn-primary watchlist-button" type="submit" value="Create">Dodaj do WatchList</button>
+</form>
 </body>
-</html>

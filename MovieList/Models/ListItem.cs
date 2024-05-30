@@ -7,10 +7,7 @@ public class ListItem
 {
     public int Id { get; set; }
     public int MovieId { get; set; }
-    public string MovieListUserId { get; set; }
+    public string? IdentityUserId { get; set; }
     [StringLength(1000)]
     public string? Note { get; set; }
-    
-    public virtual Movie Movie { get; set; }
-    public virtual MovieListUser MovieListUser { get; set; }
 }

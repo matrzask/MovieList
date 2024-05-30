@@ -59,7 +59,7 @@
                     <td>@movie.ReleaseYear</td>
                     <td>@movie.Genre</td>
                     <td class="action-cell">
-                        <a href="@Url.Action("AddToWatchlist", "Movies", new { id = movie.Id })" class="button-link">
+                        <a href="@Url.Action("Create", "List", new { id = movie.Id })" class="button-link">
                             <button>Chcę obejrzeć</button>
                         </a>
                     </td>

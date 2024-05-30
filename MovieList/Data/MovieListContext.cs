@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -8,13 +9,14 @@ using MovieList.Models;
 
 namespace MovieList.Data
 {
-    public class MovieListContext : IdentityDbContext<MovieListUser>
+    public class MovieListContext : IdentityDbContext
     {
         public MovieListContext (DbContextOptions<MovieListContext> options)
             : base(options)
         {
         }
 
-        public DbSet<MovieList.Models.Movie> Movie { get; set; } = default!;
+        public Microsoft.EntityFrameworkCore.DbSet<MovieList.Models.Movie> Movie { get; set; } = default!;
+        public Microsoft.EntityFrameworkCore.DbSet<MovieList.Models.ListItem> ListItem { get; set; } = default!;
     }
 }

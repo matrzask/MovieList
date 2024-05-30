@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="EntityFramework" Version="6.4.4" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.6" />
 
@@ -39,6 +40,22 @@
       <Compile Remove="Migrations\MovieListContextModelSnapshot.cs" />
       <Compile Remove="Migrations\20240529131959_InitialCreate.Designer.cs" />
       <Compile Remove="Controllers\HelloWorldController.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\List\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\List\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\List\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\List\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\List\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\List\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\List\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\List\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\List\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\List\Index.cshtml" />
     </ItemGroup>
 
 </Project>
