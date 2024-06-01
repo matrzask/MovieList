@@ -19,9 +19,21 @@ namespace MovieList.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Movie.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+
+            var movies = from m in _context.Movie
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+                movies = movies.Where(s => s.Title.ToLower().Contains(searchString));
+            }
+
+            return View(await movies.ToListAsync());
         }
 
         public IActionResult Privacy()

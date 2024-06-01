@@ -38,10 +38,19 @@
         a.button-link {
             text-decoration: none;
         }
+        .search-form {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Filmy</h1>
+
+    <form method="get" asp-action="Index" class="search-form">
+        <input type="text" name="searchString" placeholder="Search by title" value="@ViewData["CurrentFilter"]" />
+        <button type="submit">Search</button>
+    </form>
+
     <table>
         <thead>
             <tr>
