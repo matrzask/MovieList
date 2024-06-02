@@ -15,4 +15,6 @@ public class Movie
     
     [StringLength(40)]
     public string? Genre { get; set; }
+    
+    public virtual ICollection<ListItem> ListItems { get; set; } = new List<ListItem>();
 }

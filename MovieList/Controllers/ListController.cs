@@ -31,29 +31,16 @@ namespace MovieList.Controllers
                 return NotFound();
             }
             var query = _context.ListItem.Where(m => m.IdentityUserId == userId);
-            /*var list = query.Select(m => new ListIndexViewModel
+            var list = query.Select(m => new ListIndexViewModel
             {
                 Id = m.Id,
                 Title = m.Movie.Title,
                 ReleaseYear = m.Movie.ReleaseYear,
                 Genre = m.Movie.Genre,
                 Note = m.Note
-            });*/
-            var listTemp = query.ToList();
-            var list = new List<ListIndexViewModel>();
-            foreach (var item in listTemp)
-            {
-                list.Add(new ListIndexViewModel
-                {
-                    Id = item.Id,
-                    Title = _context.Movie.Find(item.MovieId)?.Title,
-                    ReleaseYear = _context.Movie.Find(item.MovieId)?.ReleaseYear,
-                    Genre = _context.Movie.Find(item.MovieId)?.Genre,
-                    Note = item.Note
-                });
-            }
-            //return View(await list.ToListAsync());
-            return View(list);
+            });
+            
+            return View(await list.ToListAsync());
         }
 
         // GET: List/Details/5
@@ -91,6 +78,8 @@ namespace MovieList.Controllers
         [Authorize]
         public async Task<IActionResult> Create([Bind("MovieId, Note")] ListItem listItem)
         {
+            ModelState.Clear();
+            
             string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
             {
@@ -98,7 +87,16 @@ namespace MovieList.Controllers
             }
             listItem.IdentityUserId = userId;
             
-            if (ModelState.IsValid)
+            listItem.IdentityUser = (await _context.Users.FindAsync(userId))!;
+            
+            Movie? movie = _context.Movie.Find(listItem.MovieId);
+            if(movie == null)
+            {
+                return NotFound();
+            }
+            listItem.Movie = movie;
+            
+            if (TryValidateModel(listItem))
             {
                 _context.Add(listItem);
                 await _context.SaveChangesAsync();
