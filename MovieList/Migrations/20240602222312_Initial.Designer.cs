@@ -11,8 +11,8 @@ using MovieList.Data;
 namespace MovieList.Migrations
 {
     [DbContext(typeof(MovieListContext))]
-    [Migration("20240530201516_initial")]
-    partial class initial
+    [Migration("20240602222312_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,11 +159,9 @@ namespace MovieList.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderDisplayName")
@@ -201,11 +199,9 @@ namespace MovieList.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
@@ -224,6 +220,7 @@ namespace MovieList.Migrations
 
                     b.Property<string>("IdentityUserId")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("MovieId")
@@ -234,6 +231,10 @@ namespace MovieList.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
+
+                    b.HasIndex("MovieId");
 
                     b.ToTable("ListItem");
                 });
@@ -310,6 +311,30 @@ namespace MovieList.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MovieList.Models.ListItem", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieList.Models.Movie", "Movie")
+                        .WithMany("ListItems")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdentityUser");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("MovieList.Models.Movie", b =>
+                {
+                    b.Navigation("ListItems");
                 });
 #pragma warning restore 612, 618
         }

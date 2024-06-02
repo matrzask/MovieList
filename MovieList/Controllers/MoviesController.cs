@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using MovieList.Models;
 
 namespace MovieList.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class MoviesController : Controller
     {
         private readonly MovieListContext _context;
@@ -152,23 +154,6 @@ namespace MovieList.Controllers
         private bool MovieExists(int id)
         {
             return _context.Movie.Any(e => e.Id == id);
-        }
-        //ten kontroler ponizej nic jeszcze nie robi, ale on jest odpowiedzialny za okno dodawania do doobejrzenia
-        public IActionResult AddToWatchlist(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var movie = _context.Movie.Find(id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
-            // Na razie nie robimy nic z filmem, tylko wyświetlamy pustą stronę.
-            return View(movie);
         }
     }
 }

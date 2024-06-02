@@ -7,7 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MovieListContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("MovieListContext") ?? throw new InvalidOperationException("Connection string 'MovieListContext' not found.")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<MovieListContext>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<MovieListContext>()
+    .AddRoleManager<RoleManager<IdentityRole>>();
+
+builder.Services.AddRazorPages();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
