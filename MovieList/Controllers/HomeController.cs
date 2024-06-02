@@ -27,23 +27,34 @@ namespace MovieList.Controllers
 
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+            List<MovieViewModel> movies;
+            
             if (userId == null)
             {
-                return NotFound();
+                movies = await _context.Movie
+                    .Select(m => new MovieViewModel
+                    {
+                        Movie = m,
+                        IsOnWatchlist = false
+                    })
+                    .ToListAsync();
             }
+            else
+            {
+                var userMovies = await _context.ListItem
+                    .Where(li => li.IdentityUserId == userId)
+                    .Select(li => li.MovieId)
+                    .ToListAsync();
 
-            var userMovies = await _context.ListItem
-                .Where(li => li.IdentityUserId == userId)
-                .Select(li => li.MovieId)
-                .ToListAsync();
-
-            var movies = await _context.Movie
-                .Select(m => new MovieViewModel
-                {
-                    Movie = m,
-                    IsOnWatchlist = userMovies.Contains(m.Id)
-                })
-                .ToListAsync();
+                 movies = await _context.Movie
+                    .Select(m => new MovieViewModel
+                    {
+                        Movie = m,
+                        IsOnWatchlist = userMovies.Contains(m.Id)
+                    })
+                    .ToListAsync();
+            }
+            
 
             if (!string.IsNullOrEmpty(searchString))
             {
