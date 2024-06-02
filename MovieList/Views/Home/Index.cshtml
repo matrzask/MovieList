@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MovieList.Models.Movie>
+﻿@model IEnumerable<MovieList.Models.MovieViewModel>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,8 +47,8 @@
     <h1>Filmy</h1>
 
     <form method="get" asp-action="Index" class="search-form">
-        <input type="text" name="searchString" placeholder="Search by title" value="@ViewData["CurrentFilter"]" />
-        <button type="submit">Search</button>
+        <input type="text" name="searchString" placeholder="Szukaj po tytule" value="@ViewData["CurrentFilter"]" />
+        <button type="submit">Szukaj</button>
     </form>
 
     <table>
@@ -57,18 +57,25 @@
                 <th>Title</th>
                 <th>Release Year</th>
                 <th>Genre</th>
+                <th>On Watchlist</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var movie in Model)
+            @foreach (var movieViewModel in Model)
             {
                 <tr>
-                    <td>@movie.Title</td>
-                    <td>@movie.ReleaseYear</td>
-                    <td>@movie.Genre</td>
+                    <td>@movieViewModel.Movie.Title</td>
+                    <td>@movieViewModel.Movie.ReleaseYear</td>
+                    <td>@movieViewModel.Movie.Genre</td>
                     <td class="action-cell">
-                        <a href="@Url.Action("Create", "List", new { id = movie.Id })" class="button-link">
+                        @if (movieViewModel.IsOnWatchlist)
+                        {
+                            <span>&#10003;</span>
+                        }
+                    </td>
+                    <td class="action-cell">
+                        <a href="@Url.Action("Create", "List", new { id = movieViewModel.Movie.Id })" class="button-link">
                             <button>Chcę obejrzeć</button>
                         </a>
                     </td>

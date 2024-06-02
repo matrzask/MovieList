@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using MovieList.Data;
 using MovieList.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace MovieList.Controllers
 {
@@ -24,16 +25,39 @@ namespace MovieList.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
 
-            var movies = from m in _context.Movie
-                         select m;
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+            {
+                return NotFound();
+            }
+
+            var userMovies = await _context.ListItem
+                .Where(li => li.IdentityUserId == userId)
+                .Select(li => li.MovieId)
+                .ToListAsync();
+
+            var movies = await _context.Movie
+                .Select(m => new MovieViewModel
+                {
+                    Movie = m,
+                    IsOnWatchlist = userMovies.Contains(m.Id)
+                })
+                .ToListAsync();
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                searchString = searchString.ToLower();
-                movies = movies.Where(s => s.Title.ToLower().Contains(searchString));
+                if (int.TryParse(searchString, out int searchId))
+                {
+                    movies = movies.Where(s => s.Movie.Id == searchId).ToList();
+                }
+                else
+                {
+                    movies = movies.Where(s => s.Movie.Title.ToLower().Contains(searchString.ToLower())).ToList();
+                }
             }
 
-            return View(await movies.ToListAsync());
+            return View(movies);
         }
 
         public IActionResult Privacy()
