@@ -43,6 +43,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//dodane 
+app.MapControllers();   
 app.MapRazorPages();
 
 app.Run();
