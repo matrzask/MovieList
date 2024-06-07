@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using MovieList.Data;
 using MovieList.Models;
@@ -10,6 +11,14 @@ builder.Services.AddDbContext<MovieListContext>(options =>
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<MovieListContext>()
     .AddRoleManager<RoleManager<IdentityRole>>();
+
+builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+    options =>
+    {
+        options.LoginPath = "/Identity/Account/Login"; 
+        options.LogoutPath = "/Identity/Account/Logout";
+        options.AccessDeniedPath = "/Identity/Account/AccessDenied"; 
+    });
 
 builder.Services.AddRazorPages();
 
