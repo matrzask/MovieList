@@ -126,12 +126,23 @@ namespace MovieList.Controllers
         
         public async Task<IActionResult> Edit(int id, [Bind("Id,MovieId,IdentityUserId,Note")] ListItem listItem)
         {
+            ModelState.Clear();
+            
             if (id != listItem.Id)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            
+            listItem.IdentityUser = (await _context.Users.FindAsync(listItem.IdentityUserId))!;
+            
+            Movie? movie = _context.Movie.Find(listItem.MovieId);
+            if(movie == null)
+            {
+                return NotFound();
+            }
+            listItem.Movie = movie;
+            
+            if (TryValidateModel(listItem))
             {
                 try
                 {
